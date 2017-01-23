@@ -12,6 +12,13 @@
             <artifactId>netty-all</artifactId>
             <version>5.0.0.Alpha2</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.msgpack</groupId>
+            <artifactId>msgpack</artifactId>
+            <version>0.6.7</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>nettyTest</finalName>

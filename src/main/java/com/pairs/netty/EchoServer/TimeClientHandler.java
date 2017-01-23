@@ -20,7 +20,8 @@ public class TimeClientHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        String body="QUERY TIME ORDER"+System.getProperty("line.separator");
+//        String body="QUERY TIME ORDER"+System.getProperty("line.separator");
+        String body="QUERY TIME ORDER"+"$_";
         byte[] bytes=body.getBytes();
         ByteBuf byteBuf=null;
         for(int i=0;i<100;i++){
