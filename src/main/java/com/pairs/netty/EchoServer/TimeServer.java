@@ -1,5 +1,8 @@
 package com.pairs.netty.EchoServer;
 
+import com.pairs.netty.codec.marshalling.MarshallingCodecFactory;
+import com.pairs.netty.codec.msgpack.MsgpackDecoder;
+import com.pairs.netty.codec.msgpack.MsgpackEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -9,6 +12,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 
 
@@ -45,8 +50,16 @@ public class TimeServer {
         protected void initChannel(SocketChannel channel) throws Exception {
 //            channel.pipeline().addLast(new LineBasedFrameDecoder(1024)); //使用半包解码器
 //            channel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,Unpooled.copiedBuffer("$_".getBytes())));//使用分隔符解码器
-            channel.pipeline().addLast(new FixedLengthFrameDecoder(16));
-            channel.pipeline().addLast(new StringDecoder());
+//            channel.pipeline().addLast(new FixedLengthFrameDecoder(16));
+//            channel.pipeline().addLast(new StringDecoder());
+//            channel.pipeline().addLast("frameDecoder",new LengthFieldBasedFrameDecoder(65535,0,2,0,2));
+//            channel.pipeline().addLast("msgpack decoder",new MsgpackDecoder());
+//            channel.pipeline().addLast("frameEncoder",new LengthFieldPrepender(2));
+//            channel.pipeline().addLast("msgpack encoder",new MsgpackEncoder());
+
+
+            channel.pipeline().addLast(MarshallingCodecFactory.buildMarshallingDecoder());
+            channel.pipeline().addLast(MarshallingCodecFactory.buildMarshallingEncoder());
             channel.pipeline().addLast(new ServerHanlder());
         }
 
