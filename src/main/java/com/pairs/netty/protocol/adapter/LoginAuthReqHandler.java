@@ -21,7 +21,7 @@ public class LoginAuthReqHandler extends ChannelHandlerAdapter {
         NettyMessage message= (NettyMessage) msg;
         if(message.getHeader()!=null && message.getHeader().getType()==MessageType.LOGIN_RESP.value()){
             byte loginResult= (byte) message.getBody();
-            if(loginResult!=(byte)0){
+            if(loginResult!=(byte)1){
                 ctx.close();
             }else {
                 System.out.println("Login is ok "+ message);

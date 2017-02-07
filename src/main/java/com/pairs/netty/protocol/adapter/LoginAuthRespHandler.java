@@ -62,7 +62,7 @@ public class LoginAuthRespHandler extends ChannelHandlerAdapter {
     private NettyMessage buildResponse(byte result){
         NettyMessage nettyMessage=new NettyMessage();
         Header header=new Header();
-        header.setType(MessageType.HEARTBEAT_RESP.value());
+        header.setType(MessageType.LOGIN_RESP.value());
         nettyMessage.setHeader(header);
         nettyMessage.setBody(result);
         return  nettyMessage;
