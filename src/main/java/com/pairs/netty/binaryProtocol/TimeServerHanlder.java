@@ -7,16 +7,17 @@ import io.netty.channel.ChannelHandlerContext;
 /**
  * Created by hupeng on 2017/1/19.
  */
-public class ServerHanlder extends ChannelHandlerAdapter {
+public class TimeServerHanlder extends ChannelHandlerAdapter {
 
-    private int count;
+    private static int index=0;
+
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println(msg);
-        ctx.writeAndFlush(msg);
+        MemcachedRequest request= (MemcachedRequest) msg;
+        index++;
+        System.out.println(index);
     }
-
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {

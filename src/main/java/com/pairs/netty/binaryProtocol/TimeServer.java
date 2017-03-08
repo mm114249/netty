@@ -1,6 +1,5 @@
 package com.pairs.netty.binaryProtocol;
 
-import com.pairs.netty.codec.marshalling.MarshallingCodecFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -10,6 +9,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
 
 /**
@@ -17,22 +17,22 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
  */
 public class TimeServer {
 
-    private int port=7081;
+    private int port = 7081;
 
-    private void bind(){
-        EventLoopGroup bossGroup=new NioEventLoopGroup();
-        EventLoopGroup workGroup=new NioEventLoopGroup();
-        ServerBootstrap boot=new ServerBootstrap();
-        boot.group(bossGroup,workGroup)
+    private void bind() {
+        EventLoopGroup bossGroup = new NioEventLoopGroup();
+        EventLoopGroup workGroup = new NioEventLoopGroup();
+        ServerBootstrap boot = new ServerBootstrap();
+        boot.group(bossGroup, workGroup)
                 .channel(NioServerSocketChannel.class)
-                .option(ChannelOption.SO_BACKLOG,1024)
+                .option(ChannelOption.SO_BACKLOG, 1024)
                 .childHandler(new ChildrenChannelHanler());
         try {
-            ChannelFuture future=boot.bind(port).sync();
+            ChannelFuture future = boot.bind(port).sync();
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             bossGroup.shutdownGracefully();
             workGroup.shutdownGracefully();
         }
@@ -43,18 +43,20 @@ public class TimeServer {
 
         @Override
         protected void initChannel(SocketChannel channel) throws Exception {
-            channel.pipeline().addLast(new LineBasedFrameDecoder(1024)); //使用半包解码器
+            // channel.pipeline().addLast(new LineBasedFrameDecoder(1024)); //使用半包解码器
+            // channel.pipeline().addLast(new StringDecoder());
+            //  channel.pipeline().addLast(new SimpleRequestDecoder());
             channel.pipeline().addLast(new MemcachedResponseDecoder());
-            channel.pipeline().addLast(new ServerHanlder());
+            channel.pipeline().addLast(new TimeServerSimpleHandler());
+            channel.pipeline().addLast(new TimeServerHanlder());
         }
 
     }
 
     public static void main(String[] args) {
-        TimeServer timeServer=new TimeServer();
+        TimeServer timeServer = new TimeServer();
         timeServer.bind();
     }
-
 
 
 }

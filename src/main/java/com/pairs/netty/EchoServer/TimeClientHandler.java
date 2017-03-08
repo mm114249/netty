@@ -23,26 +23,26 @@ public class TimeClientHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-//        String body="QUERY TIME ORDER"+System.getProperty("line.separator");
+        String body="QUERY TIME ORDER"+System.getProperty("line.separator");
 //        String body="QUERY TIME ORDER"+"$_";
-//        byte[] bytes=body.getBytes();
-//        ByteBuf byteBuf=null;
-//        for(int i=0;i<100;i++){
-//            byteBuf= Unpooled.copiedBuffer(bytes);
-//            byteBuf.writableBytes();
-//            ctx.writeAndFlush(byteBuf);
-//        }
+        byte[] bytes=body.getBytes();
+        ByteBuf byteBuf=null;
+        for(int i=0;i<100;i++){
+            byteBuf= Unpooled.copiedBuffer(bytes);
+            byteBuf.writableBytes();
+            ctx.writeAndFlush(byteBuf);
+        }
 
-        int loop = 100;
+//        int loop = 100;
 //        UserInfo[] userInfos=getUserInfos(loop);
 //        for(UserInfo userInfo:userInfos){
 //            ctx.writeAndFlush(userInfo);
 //        }
 
-        MarshallingModel[] marshallingModels=getMarshallingModel(loop);
-        for(MarshallingModel marshallingModel:marshallingModels){
-            ctx.writeAndFlush(marshallingModel);
-        }
+//        MarshallingModel[] marshallingModels=getMarshallingModel(loop);
+//        for(MarshallingModel marshallingModel:marshallingModels){
+//            ctx.writeAndFlush(marshallingModel);
+//        }
 
 
     }
