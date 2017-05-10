@@ -2,11 +2,12 @@ package com.pairs.netty.binaryProtocol;
 
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
  * Created by hupeng on 2017/3/7.
  */
-public class TimeClientSimpleHandler extends ChannelHandlerAdapter {
+public class TimeClientSimpleHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {

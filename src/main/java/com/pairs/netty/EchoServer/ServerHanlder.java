@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import java.util.Objects;
 /**
  * Created by hupeng on 2017/1/19.
  */
-public class ServerHanlder extends ChannelHandlerAdapter {
+public class ServerHanlder extends ChannelInboundHandlerAdapter {
 
     private int count;
 
