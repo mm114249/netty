@@ -24,7 +24,7 @@ import io.netty.handler.codec.string.StringDecoder;
  */
 public class TimeClient {
 
-    private int port=7081;
+    private int port=7076;
 
     private void connect(){
         EventLoopGroup group=new NioEventLoopGroup();
@@ -35,7 +35,7 @@ public class TimeClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));//使用半包读解码器
+                          socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024));//使用半包读解码器
 //                        socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, Unpooled.copiedBuffer("$_".getBytes())));//使用字符分割解码器
 //                        socketChannel.pipeline().addLast(new StringDecoder());
 //                        socketChannel.pipeline().addLast("frameDecoder",new LengthFieldBasedFrameDecoder(65535,0,2,0,2));
