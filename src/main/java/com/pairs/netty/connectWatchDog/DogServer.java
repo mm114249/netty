@@ -40,14 +40,12 @@ public class DogServer  {
                     }
                 });
         ChannelFuture channelFuture = boot.bind(7076);
-
         System.out.println("server started");
         try {
             channelFuture.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
 
     }
 

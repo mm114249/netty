@@ -37,7 +37,6 @@ public abstract  class ConnectWatchDog extends ChannelInboundHandlerAdapter impl
     private Integer port;
     private boolean connected=true;
     private int attemqts;
-    private CountDownLatch countDownLatch;
 
     public ConnectWatchDog(Bootstrap bootstrap, Timer timer, String host, Integer port) {
         this.bootstrap = bootstrap;
@@ -61,11 +60,10 @@ public abstract  class ConnectWatchDog extends ChannelInboundHandlerAdapter impl
             public void operationComplete(ChannelFuture channelFuture) throws Exception {
                 if(channelFuture.isSuccess()){
                     System.out.println("重连成功");
-                    connected=true;
                 }else{
                     System.out.println("重连失败");
+                    channelFuture.channel().pipeline().fireChannelInactive();
                 }
-                countDownLatch.countDown();
             }
         });
 
@@ -76,22 +74,14 @@ public abstract  class ConnectWatchDog extends ChannelInboundHandlerAdapter impl
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("链路已连接");
-        connected=true;
         ctx.fireChannelActive();
 
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        connected=false;
-        System.out.println("链路关闭");
-        while (!connected){
-            countDownLatch=new CountDownLatch(1);
-            System.out.println("开始重连操作");
-            timer.newTimeout(this,2, TimeUnit.SECONDS);
-            run(null);
-            countDownLatch.await();
-        }
+        System.out.println("链路断开,开始重连");
+        timer.newTimeout(this,2, TimeUnit.SECONDS);
         super.channelInactive(ctx);
     }
 }

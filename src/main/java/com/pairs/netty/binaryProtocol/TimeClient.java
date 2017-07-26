@@ -20,10 +20,7 @@ import java.util.Scanner;
  * Created by hupeng on 2017/1/19.
  */
 public class TimeClient {
-
     private int port=7081;
-
-
     private void connect(){
         EventLoopGroup group=new NioEventLoopGroup();
         Bootstrap bootstrap=new Bootstrap();

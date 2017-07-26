@@ -1,15 +1,9 @@
 package com.pairs.netty.EchoServer;
 
-import com.pairs.netty.bio.TimerServerUtil;
-import com.pairs.netty.model.UserInfo;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -33,9 +27,6 @@ public class ServerHanlder extends ChannelInboundHandlerAdapter {
 //        String response="QUERY TIME ORDER".equalsIgnoreCase(body)? TimerServerUtil.getCurrentTime():"BAD ORDER";
         //response+=System.getProperty("line.separator");//使用半包读解码器接收消息
 //        response+="$_";//使用分隔符解码器'
-
-        System.out.println(msg);
-
         ctx.writeAndFlush(msg);
     }
 
@@ -49,4 +40,29 @@ public class ServerHanlder extends ChannelInboundHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         ctx.close();
     }
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channel close");
+        super.channelInactive(ctx);
+
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("channel open");
+        ctx.channel().eventLoop().scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(ctx.channel().isOpen());
+                System.out.println(ctx.channel().isActive());
+            }
+        },2,2, TimeUnit.SECONDS);
+        super.channelActive(ctx);
+    }
+
+
+
+
+
+
 }
