@@ -23,6 +23,7 @@ public class BFDecode extends ByteToMessageDecoder {
         byte[] mgArray=new byte[2];
         byteBuf.readBytes(mgArray);
         String magic=new String(mgArray);
+        System.out.println(magic);
 
         if(!magic.equals("$_")){
             byteBuf.resetReaderIndex();

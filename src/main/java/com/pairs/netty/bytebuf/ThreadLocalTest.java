@@ -2,6 +2,8 @@ package com.pairs.netty.bytebuf;
 
 import org.junit.Test;
 
+import java.util.Random;
+
 /**
  * Created on 2017年07月26日11:19
  * <p>
@@ -17,22 +19,33 @@ import org.junit.Test;
  **/
 public class ThreadLocalTest {
 
-
-    @Test
-    public void test(){
-        ThreadLocal<String> threadLocal=new ThreadLocal<>();
-        for (int i = 0; i < 2; i++) {
-            final int j=i;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    threadLocal.set(""+j);
-                    System.out.println(threadLocal.get());
-                }
-            }).start();
+    private ThreadLocal<String> t=new ThreadLocal<String>();
+    private class MyRunable implements Runnable{
+        @Override
+        public void run() {
+            Random r=new Random();
+            String code=String.valueOf(r.nextInt(100));
+            t.set(code);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(t.get());
         }
-
     }
 
+
+    public static void main(String[] args) {
+        ThreadLocalTest t=new ThreadLocalTest();
+        t.run();
+    }
+
+
+    public void run(){
+        MyRunable r=new MyRunable();
+        new Thread(r).start();
+        new Thread(r).start();
+    }
 
 }

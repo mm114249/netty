@@ -1,8 +1,11 @@
 package com.pairs.netty.bytebuf;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 
@@ -32,8 +35,23 @@ public class BFServerHanlder extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        BFModel bfModel=new BFModel("aaaa",11);
-        ctx.channel().writeAndFlush(bfModel);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    Scanner scanner = new Scanner(System.in);
+                    String str=scanner.nextLine();
+                    System.out.println("输入命令:"+str);
+//                    BFModel bfModel=new BFModel("aaaa",11);
+//                    ctx.channel().writeAndFlush(bfModel);
+                    ByteBuf bt= Unpooled.buffer();
+                    bt.writeBytes("aaa".getBytes());
+                    ctx.channel().writeAndFlush(bt);
+                }
+            }
+        }).start();
+
     }
 
 

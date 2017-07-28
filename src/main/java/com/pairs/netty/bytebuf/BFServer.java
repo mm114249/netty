@@ -44,7 +44,7 @@ public class BFServer {
         @Override
         protected void initChannel(SocketChannel channel) throws Exception {
             channel.pipeline().addLast(new BFServerHanlder());
-            channel.pipeline().addLast(new BFEncode());
+           // channel.pipeline().addLast(new BFEncode());
         }
 
     }
