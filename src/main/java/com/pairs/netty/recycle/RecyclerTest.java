@@ -1,12 +1,9 @@
-package com.pairs.netty.bytebuf;
+package com.pairs.netty.recycle;
 
-import io.netty.handler.codec.http.HttpClientUpgradeHandler;
 import io.netty.util.Recycler;
 import org.junit.Test;
 
 import java.util.Random;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created on 2017年07月25日 14:28
@@ -39,19 +36,21 @@ public class RecyclerTest {
 
         RecyclerModel model1 = recycler.get();
         System.out.println(model1);
-        RecyclerModel model2 = recycler.get();
-        System.out.println(model2);
-        RecyclerModel model3 = recycler.get();
-        System.out.println(model3);
 
-        RecyclerModel model5 = recycler.get();
-        System.out.println(model5);
-        RecyclerModel model6 = recycler.get();
-        System.out.println(model6);
-        RecyclerModel model7 = recycler.get();
-        System.out.println(model7);
 
-        model1.recycle();model2.recycle();model3.recycle();model5.recycle();model6.recycle();model7.recycle();
+//        RecyclerModel model2 = recycler.get();
+//        System.out.println(model2);
+//        RecyclerModel model3 = recycler.get();
+//        System.out.println(model3);
+//
+//        RecyclerModel model5 = recycler.get();
+//        System.out.println(model5);
+//        RecyclerModel model6 = recycler.get();
+//        System.out.println(model6);
+//        RecyclerModel model7 = recycler.get();
+//        System.out.println(model7);
+//
+//        model1.recycle();model2.recycle();model3.recycle();model5.recycle();model6.recycle();model7.recycle();
 
 
 //        System.out.println(recycler.get());

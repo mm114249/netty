@@ -12,4 +12,9 @@ public class BFClientHanlder extends SimpleChannelInboundHandler<BFModel> {
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, BFModel bfModel) throws Exception {
         System.out.println(bfModel);
     }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        super.channelReadComplete(ctx);
+    }
 }

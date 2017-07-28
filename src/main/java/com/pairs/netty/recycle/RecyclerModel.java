@@ -1,4 +1,4 @@
-package com.pairs.netty.bytebuf;
+package com.pairs.netty.recycle;
 
 import io.netty.util.Recycler;
 
