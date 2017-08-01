@@ -27,6 +27,7 @@ public class BFDecode extends ByteToMessageDecoder {
 
         if(!magic.equals("$_")){
             byteBuf.resetReaderIndex();
+            byteBuf.release();
             return;
         }
 

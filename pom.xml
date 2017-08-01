@@ -31,6 +31,12 @@
             <version>1.4.11.Final</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.turn</groupId>
+            <artifactId>ttorrent-core</artifactId>
+            <version>1.5</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>nettyTest</finalName>
