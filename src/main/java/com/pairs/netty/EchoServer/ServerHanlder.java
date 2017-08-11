@@ -2,6 +2,8 @@ package com.pairs.netty.EchoServer;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelPromise;
+import io.netty.channel.DefaultChannelPromise;
 
 import java.util.concurrent.TimeUnit;
 

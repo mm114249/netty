@@ -44,11 +44,8 @@ import io.netty.util.internal.SystemPropertyUtil;
 public class HanlderServer {
 
     public static void main(String[] args) {
-        EventLoopGroup boss=new NioEventLoopGroup(2);
-        EventLoopGroup work=new NioEventLoopGroup(2);
-
-        EventExecutorGroup eventExecutorGroup=new DefaultEventExecutorGroup(1);
-
+        EventLoopGroup boss=new NioEventLoopGroup();
+        EventLoopGroup work=new NioEventLoopGroup();
         ServerBootstrap bootstrap=new ServerBootstrap();
 
         bootstrap.group(boss,work)
@@ -57,23 +54,9 @@ public class HanlderServer {
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        socketChannel.pipeline().addLast(new FixedLengthFrameDecoder(3));
-                        socketChannel.pipeline().addLast(new StringDecoder());
-                        socketChannel.pipeline().addLast(new ServerStringEncoder());
-                        socketChannel.pipeline().addLast(eventExecutorGroup,new ChannelInboundHandlerAdapter() {
-                            @Override
-                            public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                                System.out.println(ctx.channel().id().asShortText());
-                            }
-                        });
-
-                        socketChannel.pipeline().addLast(new ChannelOutboundHandlerAdapter() {
-                            @Override
-                            public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-                                System.out.println("out handler 2:"+msg);
-                                ctx.write(msg);
-                            }
-                        });
+                        socketChannel.pipeline().addLast(new HanlderDncoder());
+                        socketChannel.pipeline().addLast(new InBoundHandlerFirst());
+                        socketChannel.pipeline().addLast(new InBoundHandlerSecond());
                     }
                 });
         try {

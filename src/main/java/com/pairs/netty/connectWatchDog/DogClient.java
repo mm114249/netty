@@ -13,6 +13,11 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timeout;
 import io.netty.util.TimerTask;
+import io.netty.util.concurrent.DefaultEventExecutor;
+import io.netty.util.concurrent.DefaultEventExecutorGroup;
+import io.netty.util.concurrent.DefaultThreadFactory;
+import io.netty.util.concurrent.EventExecutor;
+import io.netty.util.concurrent.EventExecutorGroup;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,6 +36,7 @@ import java.util.concurrent.TimeUnit;
  **/
 public class DogClient {
 
+    private static final EventExecutorGroup EVENT_EXECUTORS=new DefaultEventExecutorGroup(1,new DefaultThreadFactory("client.executor"));
 
     public static void main(String[] args) {
         new DogClient().test();
@@ -56,7 +62,7 @@ public class DogClient {
                     @Override
                     protected void initChannel(Channel socketChannel) throws Exception {
                         for (ChannelHandler channelHandler : dog.handlers()) {
-                            socketChannel.pipeline().addLast(channelHandler);
+                            socketChannel.pipeline().addLast(EVENT_EXECUTORS,channelHandler);
                         }
                     }
                 });

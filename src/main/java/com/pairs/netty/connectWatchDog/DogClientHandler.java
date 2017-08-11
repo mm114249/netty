@@ -1,6 +1,7 @@
 package com.pairs.netty.connectWatchDog;
 
 import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
@@ -19,4 +20,9 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 @ChannelHandler.Sharable
 public class DogClientHandler extends ChannelInboundHandlerAdapter {
 
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println(Thread.currentThread().getName()+"*********");
+        super.channelRead(ctx, msg);
+    }
 }
