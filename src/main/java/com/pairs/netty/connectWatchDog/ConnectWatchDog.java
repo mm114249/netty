@@ -73,7 +73,7 @@ public abstract  class ConnectWatchDog extends ChannelInboundHandlerAdapter impl
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("链路已连接");
+        System.out.println(Thread.currentThread().getName()+"*********");
         ctx.fireChannelActive();
 
     }

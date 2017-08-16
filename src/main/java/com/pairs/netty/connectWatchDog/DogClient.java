@@ -45,7 +45,7 @@ public class DogClient {
     private void test(){
         Bootstrap bootstrap = new Bootstrap();
         HashedWheelTimer timer = new HashedWheelTimer();
-         final ConnectWatchDog dog = new ConnectWatchDog(bootstrap, timer, "192.168.10.191", 7076) {
+         final ConnectWatchDog dog = new ConnectWatchDog(bootstrap, timer, "127.0.0.1", 7076) {
             @Override
             public ChannelHandler[] handlers() {
                 return new ChannelHandler[]{
@@ -67,7 +67,7 @@ public class DogClient {
                     }
                 });
         try {
-            ChannelFuture channelFuture = bootstrap.connect("192.168.10.191", 7076);
+            ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 7076);
             channelFuture.addListener(new ChannelFutureListener() {
                 @Override
                 public void operationComplete(ChannelFuture channelFuture) throws Exception {

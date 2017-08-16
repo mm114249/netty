@@ -22,7 +22,8 @@ public class DogClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println(Thread.currentThread().getName()+"*********");
         super.channelRead(ctx, msg);
     }
+
+
 }
